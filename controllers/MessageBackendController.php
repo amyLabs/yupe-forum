@@ -12,17 +12,6 @@
 
 class MessageBackendController extends yupe\components\controllers\BackController
 {
-    public function actions()
-    {
-        return array(
-            'inline' => array(
-                'class' => 'yupe\components\actions\YInLineEditAction',
-                'model' => 'ForumMessage',
-                'validAttributes' => array('title', 'alias', 'status')
-            )
-        );
-    }
-
     /**
      * Отображает сообщение темы форума по указанному идентификатору
      *
@@ -31,7 +20,7 @@ class MessageBackendController extends yupe\components\controllers\BackControlle
      */
     public function actionView($id)
     {
-        $this->render('view', array('model' => $this->loadModel($id)));
+        $this->render('view', ['model' => $this->loadModel($id)]);
     }
 
     /**
@@ -57,13 +46,13 @@ class MessageBackendController extends yupe\components\controllers\BackControlle
 
                 $this->redirect(
                     (array) Yii::app()->getRequest()->getPost(
-                        'submit-type', array('create')
+                        'submit-type', ['create']
                     )
                 );
             }
         }
 
-        $this->render('create', array('model' => $model));
+        $this->render('create', ['model' => $model]);
     }
 
      /**
@@ -92,16 +81,16 @@ class MessageBackendController extends yupe\components\controllers\BackControlle
 
                 $this->redirect(
                     (array) Yii::app()->getRequest()->getPost(
-                        'submit-type', array(
+                        'submit-type', [
                             'update',
                             'id' => $model->id,
-                        )
+                        ]
                     )
                 );
             }
         }
 
-        $this->render('update', array('model' => $model));
+        $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -170,7 +159,7 @@ class MessageBackendController extends yupe\components\controllers\BackControlle
             $model->attributes = Yii::app()->getRequest()->getQuery('ForumMessage');
         }
 
-        $this->render('index', array('model' => $model));
+        $this->render('index', ['model' => $model]);
     }
 
     /**

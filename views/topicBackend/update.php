@@ -1,32 +1,32 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t('ForumModule.forum', 'Forums') => array('/forum/forumBackend/index'),
-    Yii::t('ForumModule.forum', 'Topics') => array('index'),
-    $model->title => array('/forum/topicBackend/view', 'id' => $model->id),
+$this->breadcrumbs = [
+    Yii::t('ForumModule.forum', 'Forums') => ['/forum/forumBackend/index'],
+    Yii::t('ForumModule.forum', 'Topics') => ['index'],
+    $model->title => ['/forum/topicBackend/view', 'id' => $model->id],
     Yii::t('ForumModule.forum', 'Change'),
-);
+];
 
 $this->pageTitle = Yii::t('ForumModule.forum', 'Topics - edit');
 
 $this->menu = array_merge(
     Yii::app()->getModule('forum')->getNavigation(),
-    array(
-        array('label' => Yii::t('ForumModule.forum', 'Forum') . ' «' . mb_substr($model->title, 0, 32) . '»'),
-        array('icon' => 'pencil', 'label' => Yii::t('ForumModule.forum', 'Change topic'), 'url' => array(
+    [
+        ['label' => Yii::t('ForumModule.forum', 'Forum') . ' «' . mb_substr($model->title, 0, 32) . '»'],
+        ['icon' => 'pencil', 'label' => Yii::t('ForumModule.forum', 'Change topic'), 'url' => [
             '/forum/topicBackend/update',
             'id' => $model->id
-        )),
-        array('icon' => 'eye-open', 'label' => Yii::t('ForumModule.forum', 'View topic'), 'url' => array(
+        ]],
+        ['icon' => 'eye-open', 'label' => Yii::t('ForumModule.forum', 'View topic'), 'url' => [
             '/forum/topicBackend/view',
             'id' => $model->id
-        )),
-        array('icon' => 'trash', 'label' => Yii::t('ForumModule.forum', 'Remove topic'), 'url' => '#', 'linkOptions' => array(
-            'submit' => array('/forum/topicBackend/delete', 'id' => $model->id),
-            'params' => array(Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken),
+        ]],
+        ['icon' => 'trash', 'label' => Yii::t('ForumModule.forum', 'Remove topic'), 'url' => '#', 'linkOptions' => [
+            'submit' => ['/forum/topicBackend/delete', 'id' => $model->id],
+            'params' => [Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken],
             'confirm' => Yii::t('ForumModule.forum', 'Do you really want to remove topic?'),
             'csrf' => true,
-        )),
-    )
+        ]],
+    ]
 );
 ?>
 <div class="page-header">
@@ -36,4 +36,4 @@ $this->menu = array_merge(
     </h1>
 </div>
 
-<?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+<?php echo $this->renderPartial('_form', ['model' => $model]); ?>

@@ -1,12 +1,20 @@
 <?php
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+/**
+ * Отображение для messageBackend/_form:
+ *
+ * @category YupeView
+ * @package  yupe
+ * @author   Yupe Team <team@yupe.ru>
+ * @license  https://github.com/yupe/yupe/blob/master/LICENSE BSD
+ * @link     http://yupe.ru
+ **/
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
     'id'                     => 'forum-message-form',
     'enableAjaxValidation'   => false,
     'enableClientValidation' => true,
     'type'                   => 'vertical',
-    'htmlOptions'            => array('class' => 'well'),
-    'inlineErrors'           => true,
-)); ?>
+    'htmlOptions'            => ['class' => 'well'],
+]); ?>
 <div class="alert alert-info">
     <?php echo Yii::t('ForumModule.forum', 'Fields with'); ?>
     <span class="required">*</span>
@@ -15,56 +23,85 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->errorSummary($model); ?>
 
-<div class='control-group <?php echo $model->hasErrors("topic_id") ? "error" : ""; ?>'>
-    <?php echo $form->dropDownListRow(
-        $model,
-        'topic_id',
-        ForumTopic::model()->getFormattedList(),
-        array('class' => 'span7', 'encode' => false)
-    ); ?>
-</div>
-
-<div class='control-group <?php echo $model->hasErrors("user_id") ? "error" : ""; ?>'>
-    <?php echo $form->dropDownListRow(
-        $model,
-        'user_id',
-        $model->getUserList(),
-        array('class' => 'span7')
-    ); ?>
-</div>
-
-<div class="row-fluid control-group <?php echo $model->hasErrors('message') ? 'error' : ''; ?>">
-    <div class="span12">
-        <?php /*echo $form->labelEx($model, 'message'); ?>
-        <?php $this->widget($this->yupe->editor, array(
-            'model'       => $model,
-            'attribute'   => 'message',
-            'options'     => $this->module->editorOptions,
-        ));*/ ?>
-        <?php echo $form->textAreaRow(
+<div class="row">
+    <div class="col-sm-3">
+        <?php echo $form->dropDownListGroup(
             $model,
-            'message',
-            array(
-                'rows' => 3,
-                'cols' => 98,
-                'class' => 'span7 popover-help',
-                'data-original-title' => $model->getAttributeLabel('message'),
-                'data-content' => $model->getAttributeDescription('message')
-            )
+            'topic_id',
+            [
+                'widgetOptions' => [
+                    'data'        => ForumTopic::model()->getFormattedList(),
+                    'htmlOptions' => [
+                        'class'               => 'popover-help',
+                        'data-original-title' => $model->getAttributeLabel('topic_id'),
+                        'data-content'        => $model->getAttributeDescription('topic_id'),
+                        'empty' => Yii::t('ForumModule.forum', '--no--')
+                    ],
+                ],
+            ]
         ); ?>
-        <?php echo $form->error($model, 'message'); ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $form->dropDownListGroup(
+            $model,
+            'user_id',
+            [
+                'widgetOptions' => [
+                    'data'        => $model->getUserList(),
+                    'htmlOptions' => [
+                        'class'               => 'popover-help',
+                        'data-original-title' => $model->getAttributeLabel('user_id'),
+                        'data-content'        => $model->getAttributeDescription('user_id'),
+                        'empty' => Yii::t('ForumModule.forum', '--no--')
+                    ],
+                ],
+            ]
+        ); ?>
     </div>
 </div>
 
-<?php $this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType' => 'submit',
-    'type'       => 'primary',
-    'label'      => $model->isNewRecord ? Yii::t('ForumModule.forum', 'Create message and continue') : Yii::t('ForumModule.forum', 'Save message and continue'),
-)); ?>
-<?php $this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType'  => 'submit',
-    'htmlOptions' => array('name' => 'submit-type', 'value' => 'index'),
-    'label'       => $model->isNewRecord ? Yii::t('ForumModule.forum', 'Create message and close') : Yii::t('ForumModule.forum', 'Save message and close'),
-)); ?>
+<div class="row">
+    <div class="col-sm-12 form-group popover-help"
+         data-original-title='<?php echo $model->getAttributeLabel('message'); ?>'
+         data-content='<?php echo $model->getAttributeDescription(
+             'message'
+         ); ?>'>
+        <?php echo $form->labelEx($model, 'message'); ?>
+        <?php
+        $this->widget(
+            $this->module->getVisualEditor(),
+            [
+                'model'     => $model,
+                'attribute' => 'message',
+            ]
+        ); ?>
+    </div>
+</div>
+
+<?php
+$this->widget(
+    'bootstrap.widgets.TbButton',
+    [
+        'buttonType' => 'submit',
+        'context'    => 'primary',
+        'label'      => $model->isNewRecord ? Yii::t('ForumModule.forum', 'Create message and continue') : Yii::t(
+                'ForumModule.forum',
+                'Save message and continue'
+            ),
+    ]
+); ?>
+
+<?php
+$this->widget(
+    'bootstrap.widgets.TbButton',
+    [
+        'buttonType'  => 'submit',
+        'htmlOptions' => ['name' => 'submit-type', 'value' => 'index'],
+        'label'       => $model->isNewRecord ? Yii::t('ForumModule.forum', 'Create message and close') : Yii::t(
+                'ForumModule.forum',
+                'Save message and close'
+            ),
+    ]
+); ?>
 
 <?php $this->endWidget(); ?>

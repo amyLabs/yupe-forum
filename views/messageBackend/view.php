@@ -1,31 +1,31 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t('ForumModule.forum', 'Forums') => array('/forum/forumBackend/index'),
-    Yii::t('ForumModule.forum', 'Messages') => array('index'),
+$this->breadcrumbs = [
+    Yii::t('ForumModule.forum', 'Forums') => ['/forum/forumBackend/index'],
+    Yii::t('ForumModule.forum', 'Messages') => ['index'],
     $model->id,
-);
+];
 
 $this->pageTitle = Yii::t('ForumModule.forum', 'Messages - show');
 
 $this->menu = array_merge(
     Yii::app()->getModule('forum')->getNavigation(),
-    array(
-        array('label' => Yii::t('ForumModule.forum', 'Forum') . ' «' . mb_substr($model->id, 0, 32) . '»'),
-        array('icon' => 'pencil', 'label' => Yii::t('ForumModule.forum', 'Change message'), 'url' => array(
+    [
+        ['label' => Yii::t('ForumModule.forum', 'Forum') . ' «' . mb_substr($model->id, 0, 32) . '»'],
+        ['icon' => 'pencil', 'label' => Yii::t('ForumModule.forum', 'Change message'), 'url' => [
             '/forum/messageBackend/update',
             'id' => $model->id
-        )),
-        array('icon' => 'eye-open', 'label' => Yii::t('ForumModule.forum', 'View message'), 'url' => array(
+        ]],
+        ['icon' => 'eye-open', 'label' => Yii::t('ForumModule.forum', 'View message'), 'url' => [
             '/forum/messageBackend/view',
             'id' => $model->id
-        )),
-        array('icon' => 'trash', 'label' => Yii::t('ForumModule.forum', 'Remove message'), 'url' => '#', 'linkOptions' => array(
-            'submit' => array('/forum/messageBackend/delete', 'id' => $model->id),
-            'params' => array(Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken),
+        ]],
+        ['icon' => 'trash', 'label' => Yii::t('ForumModule.forum', 'Remove message'), 'url' => '#', 'linkOptions' => [
+            'submit' => ['/forum/messageBackend/delete', 'id' => $model->id],
+            'params' => [Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken],
             'confirm' => Yii::t('ForumModule.forum', 'Do you really want to remove message?'),
             'csrf' => true,
-        )),
-    )
+        ]],
+    ]
 );
 ?>
 <div class="page-header">
@@ -35,19 +35,22 @@ $this->menu = array_merge(
      </h1>
 </div>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView', array(
-    'data'       => $model,
-    'attributes' => array(
-        'id',
-        array(
-            'name'  => 'topic_id',
-            'value' => $model->getTopicTitle(),
-        ),
-        array(
-            'name'  => 'user_id',
-            'value' => $model->getUserNickname(),
-        ),
-        'message',
-        'date',
-    ),
-)); ?>
+<?php $this->widget(
+    'bootstrap.widgets.TbDetailView',
+    [
+        'data'       => $model,
+        'attributes' => [
+            'id',
+            [
+                'name'  => 'topic_id',
+                'value' => $model->getTopicTitle(),
+            ],
+            [
+                'name'  => 'user_id',
+                'value' => $model->getUserNickname(),
+            ],
+            'message',
+            'date',
+        ],
+    ]
+); ?>

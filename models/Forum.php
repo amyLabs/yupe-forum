@@ -85,6 +85,10 @@ class Forum extends yupe\models\YModel
 			'alias'       => Yii::t('ForumModule.forum', 'Alias'),
 			'description' => Yii::t('ForumModule.forum', 'Description'),
 			'status'      => Yii::t('ForumModule.forum', 'Status'),
+            //дополнительные
+            'topicCount'   => Yii::t('ForumModule.forum', 'Number of topics'),
+            'messageCount' => Yii::t('ForumModule.forum', 'Number of messages'),
+            'lastMessage'  => Yii::t('ForumModule.forum', 'Last message'),
 		);
 	}
 
@@ -102,14 +106,12 @@ class Forum extends yupe\models\YModel
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('alias',$this->alias,true);
+		$criteria->compare('alias',$this->alias);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('status',$this->status);
 
@@ -184,24 +186,35 @@ class Forum extends yupe\models\YModel
 
     public function getForums()
     {
-        return Forum::model()->open()->findAllByAttributes(array('parent_id' => $this->id));
+        $forums = new Forum('search');
+        $forums->unsetAttributes();
+        $forums->parent_id = $this->id;
+        $forums->status = Forum::STATUS_OPEN;
+
+        return $forums;
     }
 
     public function getTopics($limit = -1)
     {
         $criteria = new CDbCriteria();
+        $criteria->select = "`t`.*";
         $criteria->compare('forum_id',$this->id);
-        $criteria->join = 'LEFT JOIN '.ForumMessage::model()->tableName().' AS fm ON fm.topic_id=t.id';
-        $criteria->order = 'fm.topic_id DESC';
-        $criteria->group='t.id';
+        $criteria->join = 'LEFT JOIN '.ForumMessage::model()->tableName().' AS `fm` ON `fm`.topic_id=`t`.id';
+        $criteria->order = '`fm`.topic_id DESC';
+        $criteria->group='`t`.id';
         $criteria->limit = $limit;
 
-        return ForumTopic::model()->findAll($criteria);
+        return new CActiveDataProvider('ForumTopic', array(
+            'criteria'=>$criteria,
+        ));
+
+        //return ForumTopic::model()->findAll($criteria);
     }
 
     public function getTopicsMessageCount()
     {
-        $topics = $this->getTopics();
+        $topics = $this->getTopics()->getData();
+
         $count = 0;
         foreach($topics as $topic) {
             $count += $topic->messageCount;
@@ -213,7 +226,7 @@ class Forum extends yupe\models\YModel
     public function getLastMessage()
     {
         $limit = 1;
-        $topic = array_shift($this->getTopics($limit));
+        $topic = array_shift($this->getTopics($limit)->getData());
 
         if ( !is_null($topic) ) {
             return $topic->getLastMessage();

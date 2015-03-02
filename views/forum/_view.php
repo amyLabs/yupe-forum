@@ -1,17 +1,6 @@
-<?php
-$forums = $model->getForums();
-$topics = $model->getTopics();
-?>
+<h2>
+    <small><?php echo $data->title; ?></small>
+</h2>
 
-<div class="tab-block">
-    <ul class="tabset">
-        <li class="active"><a><?php echo $model->title; ?></a></li>
-    </ul>
-    <div class="tab-content">
-        <?php if ( !empty($forums) ) echo $this->renderPartial('_viewForum', array('forums' => $forums)); ?>
-        <?php if ( !empty($forums) && !empty($topics) ) : ?>
-            <div style="height: 5px; background-color: #d1d1cb;"></div>
-        <?php endif; ?>
-        <?php if ( !empty($topics) ) echo $this->renderPartial('_viewTopic', array('topics' => $topics)); ?>
-    </div>
-</div>
+<?php echo $this->renderPartial('_viewForum', ['forums' => $data->getForums()]); ?>
+<?php echo $this->renderPartial('_viewTopic', ['topics' => $data->getTopics()]); ?>

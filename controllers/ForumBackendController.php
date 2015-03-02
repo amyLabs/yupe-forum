@@ -14,13 +14,13 @@ class ForumBackendController extends yupe\components\controllers\BackController
 {
     public function actions()
     {
-        return array(
-            'inline' => array(
+        return [
+            'inline' => [
                 'class' => 'yupe\components\actions\YInLineEditAction',
                 'model' => 'Forum',
-                'validAttributes' => array('title', 'alias', 'status')
-            )
-        );
+                'validAttributes' => ['title', 'alias', 'status']
+            ]
+        ];
     }
 
     /**
@@ -31,7 +31,7 @@ class ForumBackendController extends yupe\components\controllers\BackController
      */
     public function actionView($id)
     {
-        $this->render('view', array('model' => $this->loadModel($id)));
+        $this->render('view', ['model' => $this->loadModel($id)]);
     }
 
     /**
@@ -57,13 +57,13 @@ class ForumBackendController extends yupe\components\controllers\BackController
 
                 $this->redirect(
                     (array) Yii::app()->getRequest()->getPost(
-                        'submit-type', array('create')
+                        'submit-type', ['create']
                     )
                 );
             }
         }
 
-        $this->render('create', array('model' => $model));
+        $this->render('create', ['model' => $model]);
     }
 
      /**
@@ -92,16 +92,16 @@ class ForumBackendController extends yupe\components\controllers\BackController
 
                 $this->redirect(
                     (array) Yii::app()->getRequest()->getPost(
-                        'submit-type', array(
+                        'submit-type', [
                             'update',
                             'id' => $model->id,
-                        )
+                        ]
                     )
                 );
             }
         }
 
-        $this->render('update', array('model' => $model));
+        $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -170,7 +170,7 @@ class ForumBackendController extends yupe\components\controllers\BackController
             $model->attributes = Yii::app()->getRequest()->getQuery('Forum');
         }
 
-        $this->render('index', array('model' => $model));
+        $this->render('index', ['model' => $model]);
     }
 
     /**

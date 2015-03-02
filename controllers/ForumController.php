@@ -17,11 +17,13 @@ class ForumController extends yupe\components\controllers\FrontController
      * @return void
      */
     public function actionIndex()
-    {       
-        $forums = Forum::model()->open()->findAllByAttributes(array(
-            'parent_id' => NULL,
-        ));
-        $this->render('index', array('forums' => $forums));
+    {
+        $forums = new Forum('search');
+        $forums->unsetAttributes();
+        $forums->parent_id = [NULL];
+        $forums->status = Forum::STATUS_OPEN;
+
+        $this->render('index', ['forums' => $forums]);
     }
 
     /**
@@ -34,14 +36,14 @@ class ForumController extends yupe\components\controllers\FrontController
      */
     public function actionShow($alias = null)
     {
-        $forum = Forum::model()->open()->findByAttributes(array(
+        $forum = Forum::model()->open()->findByAttributes([
             'alias' => $alias,
-        ));
+        ]);
 
         if ($forum === null){
            throw new CHttpException(404, Yii::t('ForumModule.forum', 'Page was not found!'));
         }
 
-        $this->render('show', array('forum' => $forum));
+        $this->render('show', ['forum' => $forum]);
     }
 }

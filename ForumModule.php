@@ -14,7 +14,7 @@ use yupe\components\WebModule;
 
 class ForumModule extends WebModule
 {
-    const VERSION = '0.7.0.1';
+    const VERSION = '0.9.0.1';
 
     public function getDependencies()
     {
@@ -74,7 +74,7 @@ class ForumModule extends WebModule
 
     public function getIcon()
     {
-        return 'folder-open';
+        return 'fa fa-fw fa-folder-open';
     }
 
     public function init()
@@ -91,14 +91,14 @@ class ForumModule extends WebModule
     {
         return array(
             array('label' => Yii::t('ForumModule.forum', 'Forums')),
-            array('icon' => 'list-alt', 'label' => Yii::t('ForumModule.forum', 'Forum manage'), 'url' => array('/forum/forumBackend/index')),
-            array('icon' => 'plus-sign', 'label' => Yii::t('ForumModule.forum', 'Create forum'), 'url' => array('/forum/forumBackend/create')),
+            array('icon' => 'fa fa-fw fa-list-alt', 'label' => Yii::t('ForumModule.forum', 'Forum manage'), 'url' => array('/forum/forumBackend/index')),
+            array('icon' => 'fa fa-fw fa-plus-square', 'label' => Yii::t('ForumModule.forum', 'Create forum'), 'url' => array('/forum/forumBackend/create')),
             array('label' => Yii::t('ForumModule.forum', 'Topics')),
-            array('icon' => 'list-alt', 'label' => Yii::t('ForumModule.forum', 'Topic manage'), 'url' => array('/forum/topicBackend/index')),
-            array('icon' => 'plus-sign', 'label' => Yii::t('ForumModule.forum', 'Create topic'), 'url' => array('/forum/topicBackend/create')),
+            array('icon' => 'fa fa-fw fa-list-alt', 'label' => Yii::t('ForumModule.forum', 'Topic manage'), 'url' => array('/forum/topicBackend/index')),
+            array('icon' => 'fa fa-fw fa-plus-square', 'label' => Yii::t('ForumModule.forum', 'Create topic'), 'url' => array('/forum/topicBackend/create')),
             array('label' => Yii::t('ForumModule.forum', 'Messages')),
-            array('icon' => 'list-alt', 'label' => Yii::t('ForumModule.forum', 'Message manage'), 'url' => array('/forum/messageBackend/index')),
-            array('icon' => 'plus-sign', 'label' => Yii::t('ForumModule.forum', 'Create message'), 'url' => array('/forum/messageBackend/create')),
+            array('icon' => 'fa fa-fw fa-list-alt', 'label' => Yii::t('ForumModule.forum', 'Message manage'), 'url' => array('/forum/messageBackend/index')),
+            array('icon' => 'fa fa-fw fa-plus-square', 'label' => Yii::t('ForumModule.forum', 'Create message'), 'url' => array('/forum/messageBackend/create')),
         );
     }
 

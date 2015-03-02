@@ -1,18 +1,29 @@
-<?php echo CHtml::beginForm(); ?>
+<?php $form = $this->beginWidget(
+    'bootstrap.widgets.TbActiveForm',
+    [
+        'id'          => 'topic-message-form',
+        'type'        => 'vertical',
+        'htmlOptions' => [
+            'class' => 'well',
+        ]
+    ]
+); ?>
 
-    <?php echo CHtml::errorSummary($message); ?>
+<?php echo $form->errorSummary($message); ?>
 
-    <?php echo CHtml::textArea('ForumMessage[message]', '',
-        array(
-            'style' => 'width: 450px; float: right; height: 100px;'
-        )
-    ); ?>
+<div class='row'>
+    <div class="col-sm-12">
+        <?php echo $form->textAreaGroup($message, 'message'); ?>
+    </div>
+</div>
 
-    <?php echo CHtml::submitButton('Написать сообщение',
-        array(
-            'class' => 'btn',
-            'style' => 'width: 150px; float: right; margin-top: 5px;'
-        )
-    ); ?>
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-primary" type="submit">
+            <i class="glyphicon glyphicon-comment"></i>
+            <?php echo Yii::t('ForumModule.forum','Write a message'); ?>
+        </button>
+    </div>
+</div>
 
-<?php echo CHtml::endForm(); ?>
+<?php $this->endWidget(); ?>

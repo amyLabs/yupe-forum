@@ -1,8 +1,8 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t('ForumModule.forum', 'Forums') => array('/forum/forumBackend/index'),
+$this->breadcrumbs = [
+    Yii::t('ForumModule.forum', 'Forums') => ['/forum/forumBackend/index'],
     Yii::t('ForumModule.forum', 'Create'),
-);
+];
 
 $this->pageTitle = Yii::t('ForumModule.forum', 'Forums - create');
 
@@ -15,4 +15,4 @@ $this->menu = Yii::app()->getModule('forum')->getNavigation();
     </h1>
 </div>
 
-<?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+<?php echo $this->renderPartial('_form', ['model' => $model]); ?>

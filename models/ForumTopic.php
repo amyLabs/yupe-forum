@@ -17,7 +17,7 @@ class ForumTopic extends yupe\models\YModel
     const STATUS_OPEN = 1;
     const STATUS_CLOSE = 2;
 
-    const PAGINATION_COUNT = 5;
+    const PAGINATION_COUNT = 2;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -67,6 +67,9 @@ class ForumTopic extends yupe\models\YModel
 			'alias'       => Yii::t('ForumModule.forum', 'Alias'),
             'description' => Yii::t('ForumModule.forum', 'Description'),
             'status'      => Yii::t('ForumModule.forum', 'Status'),
+            //дополнительные
+            'messageCount' => Yii::t('ForumModule.forum', 'Number of messages'),
+            'lastMessage'  => Yii::t('ForumModule.forum', 'Last message'),
 		);
 	}
 
